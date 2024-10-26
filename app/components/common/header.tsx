@@ -3,7 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import ThemeToggle from "./themeToggle";
 import { useTheme } from "../../context/useTheme";
 import Link from "next/link";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import useSearch from "@/app/zustand/useSearch";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,6 @@ const Header = () => {
   const { width = 1200 } = useWindowResize();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { theme } = useTheme();
   const { setSearchQuery, debouncedQuery } = useSearch();
   const prevDebouncedQuery = useRef(debouncedQuery);
@@ -38,7 +37,7 @@ const Header = () => {
       router.push(`/`); // Redirect to home page on debounced search query change
       prevDebouncedQuery.current = debouncedQuery;
     }
-  }, [debouncedQuery, pathname, router, searchParams]);
+  }, [debouncedQuery, pathname, router]);
 
   return (
     <header className="sticky h-16 top-0 z-50 w-full border-b bg-white dark:bg-gray-900 backdrop-blur">

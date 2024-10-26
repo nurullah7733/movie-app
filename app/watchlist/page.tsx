@@ -22,7 +22,7 @@ const WatchlistPage = () => {
                 className="bg-card text-card-foreground rounded-lg shadow-md overflow-hidden"
               >
                 <div className="relative">
-                  <Link href={`/movies/${movie.id}`} key={movie.id}>
+                  <Link href={`/movies/${movie.id}`}>
                     <Image
                       src={
                         movie.poster_path
