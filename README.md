@@ -6,7 +6,7 @@ Visit the live application at: [https://movie-app-ivory-iota.vercel.app](https:/
 
 A modern, responsive movie discovery platform built with Next.js 14, TMDB API, and cutting-edge web technologies. This application allows users to explore popular movies, search for specific titles, view detailed information, and maintain a personal watchlist.
 
-![Movie App Screenshot](screenshot.png)
+![Movie App Screenshot](Movie-App.png)
 
 ## 🌟 Features
 
