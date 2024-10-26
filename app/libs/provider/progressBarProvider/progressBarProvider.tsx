@@ -5,7 +5,7 @@ const AppProgressbarProvider = () => {
     <ProgressBar
       height="3px"
       color="#0000ff"
-      options={{ showSpinner: true }}
+      options={{ showSpinner: false }}
       shallowRouting
     />
   );

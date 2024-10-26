@@ -26,7 +26,7 @@ const getMovieRecommendations = async (
 
   try {
     const res = await fetch(url, {
-      next: { revalidate: 600 },
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) return [];

@@ -12,7 +12,7 @@ interface ClientHomeProps {
   initialData: MovieResponse;
 }
 
-export default function ClientHome({ initialData }: ClientHomeProps) {
+export default function Home({ initialData }: ClientHomeProps) {
   const scrollPosition = useScrollPosition();
   const { debouncedQuery } = useSearch();
   const { ref, inView } = useInView();
@@ -31,7 +31,7 @@ export default function ClientHome({ initialData }: ClientHomeProps) {
           },
       getNextPageParam: (lastPage) =>
         lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
-      staleTime: 60000,
+      staleTime: 600000,
       refetchOnWindowFocus: false,
     });
 
@@ -42,27 +42,29 @@ export default function ClientHome({ initialData }: ClientHomeProps) {
   }, [data, inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {data?.pages.map((page) =>
-          page.results.map((movie: MovieCardProps) => (
-            <MovieCard
-              key={movie.id}
-              movieId={movie.id}
-              title={movie.title}
-              poster_path={movie.poster_path || ""}
-            />
-          ))
+    <div className="dark:bg-gray-800">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {data?.pages.map((page) =>
+            page.results.map((movie: MovieCardProps) => (
+              <MovieCard
+                key={movie.id}
+                movieId={movie.id}
+                title={movie.title}
+                poster_path={movie.poster_path || ""}
+              />
+            ))
+          )}
+        </div>
+        {isLoading && <p className="text-center mt-4">Loading movies...</p>}
+        {!isLoading && data && data.pages[0].results.length === 0 && (
+          <p className="text-center mt-4">No movies found</p>
         )}
+        {isFetchingNextPage && (
+          <p className="text-center mt-4">Loading more movies...</p>
+        )}
+        <div ref={ref} className="h-10" />
       </div>
-      {isLoading && <p className="text-center mt-4">Loading movies...</p>}
-      {!isLoading && data && data.pages[0].results.length === 0 && (
-        <p className="text-center mt-4">No movies found</p>
-      )}
-      {isFetchingNextPage && (
-        <p className="text-center mt-4">Loading more movies...</p>
-      )}
-      <div ref={ref} className="h-10" />
     </div>
   );
 }

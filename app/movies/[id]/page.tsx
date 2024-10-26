@@ -1,4 +1,3 @@
-// app/movies/[id]/page.tsx
 import { Suspense } from "react";
 import Image from "next/image";
 import getMovieDetails from "../../libs/APIRequest/movieDetailsRequest";
@@ -9,6 +8,34 @@ import RecomendationSection from "./_components/recomendationSection";
 import { getWatchlist } from "../../actions/watchlistActions";
 import useWatchlistStore from "../../zustand/useWatchlist";
 import WatchlistSection from "./_components/watchlistSection";
+import { Metadata } from "next";
+
+// Generate dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const movie = await getMovieDetails(params.id);
+
+  return {
+    title: `${movie.title}`,
+    description:
+      movie.overview ||
+      `View details about ${movie.title} including cast, ratings, and recommendations`,
+    openGraph: {
+      title: `${movie.title} - Movie Details`,
+      description: movie.overview,
+      images: [`https://image.tmdb.org/t/p/w500${movie.poster_path}`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${movie.title} - Movie Details`,
+      description: movie.overview,
+      images: [`https://image.tmdb.org/t/p/w500${movie.poster_path}`],
+    },
+  };
+}
 
 export default async function MovieDetailsPage({
   params,
@@ -24,9 +51,6 @@ export default async function MovieDetailsPage({
   const movieRecommendationsPromise = getMovieRecommendations(id);
 
   const movie = await getMovieDetails(id);
-
-  const { watchlist } = useWatchlistStore.getState();
-  console.log("watchlist", watchlist);
 
   return (
     <div className="  dark:bg-gray-800  ">

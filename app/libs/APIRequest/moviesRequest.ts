@@ -34,7 +34,7 @@ const fetchMovies = async (
 
   const options: RequestInit = {
     cache: query ? "no-store" : "force-cache",
-    next: query ? undefined : { revalidate: 600 },
+    next: query ? undefined : { revalidate: 60 },
   };
 
   try {

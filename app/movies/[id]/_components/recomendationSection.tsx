@@ -4,7 +4,7 @@ import MovieCard from "@/app/components/common/movieCard";
 interface MovieRecommendation {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
   vote_average: number;
 }
 
@@ -15,10 +15,6 @@ interface RecomendationSectionProps {
 const RecomendationSection: React.FC<RecomendationSectionProps> = async ({
   movieRecommendationsPromise,
 }) => {
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  await delay(3000); // waits for 3 seconds
   const recommendations = await movieRecommendationsPromise;
 
   return (
@@ -33,7 +29,7 @@ const RecomendationSection: React.FC<RecomendationSectionProps> = async ({
               key={movie.id}
               movieId={movie.id}
               title={movie.title}
-              poster_path={movie.poster_path}
+              poster_path={movie.poster_path || ""}
             />
           ))}
         </div>

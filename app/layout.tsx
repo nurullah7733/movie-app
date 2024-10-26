@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import TanStackQueryProvider from "./libs/tanStackQueryProvider/tanStackQueryProvider";
+import TanStackQueryProvider from "./libs/provider/tanStackQueryProvider/tanStackQueryProvider";
 import { ThemeProvider } from "./context/useTheme";
 import Header from "./components/common/header";
-import AppProgressbarProvider from "./libs/progressBarProvider/progressBarProvider";
+import AppProgressbarProvider from "./libs/provider/progressBarProvider/progressBarProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

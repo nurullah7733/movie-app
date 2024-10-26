@@ -7,8 +7,11 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useSearch from "@/app/zustand/useSearch";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
+import useWindowResize from "../../libs/windowResize/useWindowResize";
 
 const Header = () => {
+  const { width = 1200 } = useWindowResize();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -43,14 +46,14 @@ const Header = () => {
         <div className="flex justify-between !items-center h-16 gap-2">
           <Link href="/">
             {theme === "dark" ? (
-              <img
+              <Image
                 src="/movie-app-logo.png"
                 alt="logo"
                 width={100}
                 height={30}
               />
             ) : (
-              <img
+              <Image
                 src="/movie-app-logo-2.png"
                 alt="logo"
                 width={100}
@@ -60,7 +63,11 @@ const Header = () => {
           </Link>
 
           <input
-            placeholder="Search movies at least 3 characters..."
+            placeholder={`${
+              width < 768
+                ? "Search movie..."
+                : "Search movies at least 3 characters..."
+            }`}
             className="md:w-[400px] lg:w-[600px] border rounded py-2 px-3 text-sm bg-white dark:bg-gray-800"
             {...register("search", {
               minLength: 3,
@@ -71,7 +78,9 @@ const Header = () => {
 
           <div className="flex items-center md:gap-4 gap-2">
             <button>
-              <FaHeart className="h-5 w-5" />
+              <Link href="/watchlist">
+                <FaHeart className="h-5 w-5" />
+              </Link>
             </button>
             <div>
               <ThemeToggle />
